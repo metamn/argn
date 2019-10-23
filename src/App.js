@@ -2,7 +2,7 @@ import React from 'react';
 import MetaMaskComponent from './components/MetaMaskComponent'
 
 /**
- * Connects to the Ethereum blockchain
+ * Connects to the Ethereum blockchain via web3
  * 
  * @see https://noahzinsmeister.gitbook.io/web3-react/
  * @see https://github.com/NoahZinsmeister/web3-react/issues/19
@@ -12,10 +12,6 @@ import MetaMaskComponent from './components/MetaMaskComponent'
  */
 import { Connectors } from 'web3-react'
 
-/**
- * Uses the Web3.js API to interact with the Ethereum blockchain
- */
-//import {Web3} from 'web3'
 
 /**
  * Provides a web3 context for the app

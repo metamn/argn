@@ -2,16 +2,14 @@ import React, {useEffect} from "react";
 import { useWeb3Context, Connectors } from 'web3-react'
 import Blocks from '../Blocks'
 
-
-
 /**
- * Displays the component
+ * Makes MetaMask available for the app
+ * 
+ * @see https://github.com/NoahZinsmeister/web3-react/issues/19
  */
 const MetaMaskComponent = props => {
   const context = useWeb3Context();
   const { InjectedConnector } = Connectors
-
-  //console.log(context);
 
   useEffect(() => {
     if (!context.active) {

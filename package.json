@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "ethers": "^4.0.38",
-    "json-stringify-safe": "^5.0.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
