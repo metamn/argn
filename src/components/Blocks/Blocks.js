@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useWeb3Context } from "web3-react";
 import { utils } from "ethers";
 import PropTypes from "prop-types";
@@ -18,48 +18,35 @@ const defaultProps = {};
  *
  * @see https://ethereum.stackexchange.com/questions/1587/how-can-i-get-the-data-of-the-latest-10-blocks-via-web3-js
  *
- * @see https://github.com/jinserk/web3-react-dapp/blob/master/src/NetworkInfo.js
+ * @see https://github.com/NoahZinsmeister/web3-react/issues/12
+ * @see https://github.com/jinserk/web3-react-dapp/pull/1/commits/3573b64d9d2028d6921c02b748c5749222cd2d99
  */
 const Blocks = props => {
-  const context = useWeb3Context();
-  const provider = context.library;
+  const { active, library } = useWeb3Context();
 
-  const [blockNumber, setBlockNumber] = useState(0);
-  const [gasPrice, setGasPrice] = useState("0");
+  /**
+   * Loads the latest block number
+   */
+  const [latestBlockNumber, setLatestBlockNumber] = useState(0);
 
-  async function fetch() {
-    setBlockNumber(await provider.getBlockNumber());
-    setGasPrice(utils.formatUnits(await provider.getGasPrice(), 9));
-  }
-  fetch();
+  useEffect(() => {
+    if (active) {
+      library
+        .getBlockNumber()
+        .then(value => {
+          setLatestBlockNumber(value);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, [active]);
 
-  return (
-    <div className="App-table">
-      <table width="500">
-        <caption>Network Info</caption>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Network ID</td>
-            <td>{context.networkId}</td>
-          </tr>
-          <tr>
-            <td>Block Number</td>
-            <td>{blockNumber}</td>
-          </tr>
-          <tr>
-            <td>Gas Price</td>
-            <td>{gasPrice} gwei</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  /**
+   * Loads the latest 10 blocks
+   */
+
+  return <div className="Blocks">Latest: {latestBlockNumber}</div>;
 };
 
 Blocks.propTypes = propTypes;
