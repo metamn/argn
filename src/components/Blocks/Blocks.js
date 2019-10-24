@@ -89,8 +89,7 @@ const Blocks = props => {
 
   return (
     <Section className="Blocks" title="Blocks">
-      {blocks &&
-        blocks.map((block, index) => <Block key={index} block={block} />)}
+      {blocks && blocks.map((block, index) => <Block key={index} {...block} />)}
     </Section>
   );
 };

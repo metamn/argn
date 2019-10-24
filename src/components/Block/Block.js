@@ -27,7 +27,7 @@ const Block = props => {
 
   return (
     <Card className="Block">
-      <Text>Block #{number}</Text>
+      <Text size="large">Block #{number}</Text>
     </Card>
   );
 };
