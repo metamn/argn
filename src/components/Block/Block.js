@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { Card, Text } from "@aragon/ui";
 
+import Transactions from "../Transactions";
+
 /**
  * Defines the prop types
  */
@@ -23,11 +25,14 @@ const Container = styled("div")(props => ({}));
  * Displays the component
  */
 const Block = props => {
-  const { number } = props;
+  const { number, transactions } = props;
+
+  //console.log("Block:", props);
 
   return (
     <Card className="Block">
       <Text size="large">Block #{number}</Text>
+      <Transactions transactions={transactions} />
     </Card>
   );
 };

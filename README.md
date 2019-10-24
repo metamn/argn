@@ -19,7 +19,7 @@ NOTES
 - [x] The app will be loaded in a browser with MetaMask.
 - [ ] Feel free to interpret the requirements in any way that you think could be interesting.
 - [x] The app doesn’t need to follow the Aragon visual identity but you can use the aragonUI.
-- [ ] Don’t hesitate to ask any question to the team :-)
+- [x] Don’t hesitate to ask any question to the team :-)
 
 THE SUBMISSION WILL BE EVALUATED ON THE FOLLOWING POINTS:
 
