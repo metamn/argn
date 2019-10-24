@@ -15,10 +15,6 @@ const defaultProps = {};
 /**
  * Displays the blocks
  *
- * @see https://ethereum.stackexchange.com/questions/1587/how-can-i-get-the-data-of-the-latest-10-blocks-via-web3-js
- *
- * @see https://github.com/NoahZinsmeister/web3-react/issues/12
- * @see https://github.com/jinserk/web3-react-dapp/pull/1/commits/3573b64d9d2028d6921c02b748c5749222cd2d99
  */
 const Blocks = props => {
   const { active, library } = useWeb3Context();
@@ -26,19 +22,24 @@ const Blocks = props => {
   /**
    * Loads the latest block number
    *
-   * - The other block numbers will be calculated using this block number
+   * - The other block numbers will be obtained using this block number
    */
   const [latestBlockNumber, setLatestBlockNumber] = useState(0);
 
   useEffect(() => {
     if (active) {
+      /**
+       * The usage of this `web3-react` library is cumbersome
+       * - The async / await construct doesn't really works
+       * - This working approach used below comes from the author itself: https://github.com/NoahZinsmeister/web3-react/issues/12, https://github.com/jinserk/web3-react-dapp/pull/1/commits/3573b64d9d2028d6921c02b748c5749222cd2d99
+       */
       library
         .getBlockNumber()
         .then(value => {
           setLatestBlockNumber(value);
         })
         .catch(err => {
-          console.log(err);
+          console.log("getBlockNumber error:", err);
         });
     }
   }, [active, library]);
@@ -53,7 +54,8 @@ const Blocks = props => {
     if (active && latestBlockNumber) {
       /**
        * NOTICE: It seems `BatchRequest` is not working in this library: https://github.com/NoahZinsmeister/web3-react/issues/34
-       * Therefore all blocks will be loaded one-by-one
+       * - A best practice would be using it: https://ethereum.stackexchange.com/questions/1587/how-can-i-get-the-data-of-the-latest-10-blocks-via-web3-js
+       * - But now it is skipped until the bug is fixed
        */
       for (var i = 0; i < 10; i++) {
         library
@@ -62,7 +64,7 @@ const Blocks = props => {
             setBlocks(blocks => [...blocks, value]);
           })
           .catch(err => {
-            console.log(err);
+            console.log("getBlock error:", err);
           });
       }
     }
