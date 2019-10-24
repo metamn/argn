@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
 import { useWeb3Context, Connectors } from "web3-react";
+
+import { Main } from "@aragon/ui";
+import { AppView } from "@aragon/ui";
+import { AppBar } from "@aragon/ui";
+
 import Blocks from "../Blocks";
 
 /**
@@ -34,7 +39,13 @@ const MetaMaskWrapper = props => {
     }
   }
 
-  return <Blocks />;
+  return (
+    <Main>
+      <AppView appBar={<AppBar title="The Aragon Challenge" />}>
+        <Blocks />
+      </AppView>
+    </Main>
+  );
 };
 
 export default MetaMaskWrapper;

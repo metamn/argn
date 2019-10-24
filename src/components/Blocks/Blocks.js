@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3Context } from "web3-react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
+import { Section as _Section } from "../SemanticHTML";
+import Block from "../Block";
 
 /**
  * Defines the prop types
@@ -11,6 +15,19 @@ const propTypes = {};
  * Defines the default props
  */
 const defaultProps = {};
+
+/**
+ * Styles the component container
+ */
+const Section = styled(_Section)(props => ({
+  display: "flex",
+  flexWrap: "wrap",
+
+  "& .Block": {
+    marginBottom: "1em",
+    marginRight: "1em"
+  }
+}));
 
 /**
  * Displays the blocks
@@ -71,17 +88,10 @@ const Blocks = props => {
   }, [active, latestBlockNumber, library]);
 
   return (
-    <div className="Blocks">
-      <p>Latest block: {latestBlockNumber}</p>
-      <p>All blocks:</p>
-      <ul>
-        {blocks &&
-          blocks.map((block, index) => {
-            const { number } = block;
-            return <li key={index}>{number}</li>;
-          })}
-      </ul>
-    </div>
+    <Section className="Blocks" title="Blocks">
+      {blocks &&
+        blocks.map((block, index) => <Block key={index} block={block} />)}
+    </Section>
   );
 };
 
