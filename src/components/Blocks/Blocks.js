@@ -27,7 +27,7 @@ const Section = styled(_Section)(props => ({
 
   "& .Block": {
     marginBottom: `${GU * 3}px`,
-    marginRight: "1em"
+    marginRight: `${GU * 3}px`
   }
 }));
 
