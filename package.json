@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aragon/ui": "^0.40.2",
+    "@aragon/ui": "^1.0.0-alpha.32",
     "ethers": "^4.0.38",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

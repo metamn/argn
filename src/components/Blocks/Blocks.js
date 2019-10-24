@@ -3,6 +3,8 @@ import { useWeb3Context } from "web3-react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { GU } from "@aragon/ui";
+
 import { Section as _Section } from "../SemanticHTML";
 import Block from "../Block";
 
@@ -24,7 +26,7 @@ const Section = styled(_Section)(props => ({
   flexWrap: "wrap",
 
   "& .Block": {
-    marginBottom: "1em",
+    marginBottom: `${GU * 3}px`,
     marginRight: "1em"
   }
 }));
