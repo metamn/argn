@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3Context } from "web3-react";
-import { utils } from "ethers";
 import PropTypes from "prop-types";
 
 /**
@@ -26,6 +25,8 @@ const Blocks = props => {
 
   /**
    * Loads the latest block number
+   *
+   * - The other block numbers will be calculated using this block number
    */
   const [latestBlockNumber, setLatestBlockNumber] = useState(0);
 
@@ -40,13 +41,46 @@ const Blocks = props => {
           console.log(err);
         });
     }
-  }, [active]);
+  }, [active, library]);
 
   /**
    * Loads the latest 10 blocks
+   *
    */
+  const [blocks, setBlocks] = useState([]);
 
-  return <div className="Blocks">Latest: {latestBlockNumber}</div>;
+  useEffect(() => {
+    if (active && latestBlockNumber) {
+      /**
+       * NOTICE: It seems `BatchRequest` is not working in this library: https://github.com/NoahZinsmeister/web3-react/issues/34
+       * Therefore all blocks will be loaded one-by-one
+       */
+      for (var i = 0; i < 10; i++) {
+        library
+          .getBlock(latestBlockNumber - i)
+          .then(value => {
+            setBlocks(blocks => [...blocks, value]);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }
+  }, [active, latestBlockNumber, library]);
+
+  return (
+    <div className="Blocks">
+      <p>Latest block: {latestBlockNumber}</p>
+      <p>All blocks:</p>
+      <ul>
+        {blocks &&
+          blocks.map((block, index) => {
+            const { number } = block;
+            return <li key={index}>{number}</li>;
+          })}
+      </ul>
+    </div>
+  );
 };
 
 Blocks.propTypes = propTypes;
