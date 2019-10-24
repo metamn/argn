@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { Text, Button, GU, Modal } from "@aragon/ui";
 
+import TransactionList from "../TransactionList";
+
 /**
  * Defines the prop types
  */
@@ -29,8 +31,8 @@ const Container = styled("div")(props => ({
 /**
  * Styles the modal
  *
- * - The modal is take out of context, ie injected somewhere else in the DOM
- * - So it has to be styled outside its container
+ * - The modal is taken out of context, ie injected somewhere else in the DOM
+ * - So it has to be styled individually, outside of its container
  */
 const modalStyle = { zIndex: "10" };
 
@@ -46,21 +48,38 @@ const Transactions = props => {
    */
   const [opened, setOpened] = useState(false);
 
+  /**
+   * Defines the content of the Modal
+   *
+   * - It is the list of transactions
+   * - Sometimes this list can contain hundreds of transactions
+   * - Therefore they are loaded only when the user clicks the `Browse` button
+   */
+  const [modalContent, setModalContent] = useState("");
+
+  /**
+   * Handles the click on Modal
+   */
+  const handleModalClick = () => {
+    setOpened(true);
+    setModalContent(<TransactionList transactions={transactions} />);
+  };
+
   return (
     <Container className="Transactions">
       <Text>Transactions: {count}</Text>
 
-      <Button class="Button" onClick={() => setOpened(true)}>
+      <Button className="Button" onClick={() => handleModalClick()}>
         Browse
       </Button>
 
       <Modal
-        class="Modal"
+        className="Modal"
         style={modalStyle}
         visible={opened}
         onClose={() => setOpened(false)}
       >
-        {/* content goes here */}
+        {modalContent}
         <Button onClick={() => setOpened(false)}>Close</Button>
       </Modal>
     </Container>
